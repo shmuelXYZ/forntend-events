@@ -18,7 +18,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ name, background }) => {
     <li
       onClick={() => handleClick()}
       value={name}
-      className="bg-teal-400 bg-cover bg-center rounded-2xl flex justify-center items-center mx-2 my-2 h-48 w-48 cursor-pointer hover:scale-105"
+      className="bg-[url('/src/assets/sport.jpg')] bg-cover bg-center rounded-2xl flex justify-self-center items-center mx-2 my-2 h-48 w-48 cursor-pointer hover:scale-105"
     >
       <button
         value={name}

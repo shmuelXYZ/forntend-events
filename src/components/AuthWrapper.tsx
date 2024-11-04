@@ -1,13 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "./NavBar";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import { User } from "../types/userTypes";
+import api from "../api/api";
 
 const AuthWrapper: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [showRegisterForm, setShowRegisterForm] = useState(false);
+
+  //verifyUser is called to check if the user is authenticated.
+  // useEffect(() => {
+  //   const verifyUser = async () => {
+  //     try {
+  //       const res = await api.get("/login");
+  //       // user information store in the user state using setUser.
+  //       setUser(res.data.user);
+  //     } catch (err) {
+  //       console.log("not a valid user");
+  //     }
+  //   };
+  //   verifyUser();
+  // }, []);
 
   const toggleLoginForm = () => {
     setShowLoginForm((prevState) => {

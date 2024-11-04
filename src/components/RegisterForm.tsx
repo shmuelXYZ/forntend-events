@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../api/api";
 
 interface RegisterFormProps {
   onClose: () => void;
@@ -16,7 +16,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onClose }) => {
     e.preventDefault();
     console.log("Rgister submitted:", { firstName, lastName, email, password });
     try {
-      const response = await axios.post("api/register", {
+      const response = await api.post("/register/users", {
         email,
         password,
         firstName,

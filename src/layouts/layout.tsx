@@ -8,6 +8,7 @@ export const Layout: React.FC = () => {
       <main>
         <Outlet />
       </main>
+
       <footer>
         <Footer />
       </footer>

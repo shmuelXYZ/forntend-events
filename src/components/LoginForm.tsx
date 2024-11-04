@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../api/api";
 
 // move to types
 interface LoginFormProps {
@@ -16,7 +16,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ setUser, onClose }) => {
     e.preventDefault();
     console.log("Login submitted:", { email, password });
     try {
-      const response = await axios.post("api/login", { email, password });
+      const response = await api.post("/login", { email, password });
+      console.log(response);
       setUser(response.data);
       onClose();
     } catch (err) {
