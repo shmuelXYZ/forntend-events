@@ -7,7 +7,7 @@ export default function Search() {
     <input
       className="justify-self-center border-white rounded-md my-1 bg-slate-600 focus:outline-none"
       type="text"
-      placeholder="Search Events..."
+      placeholder=" Search Events..."
       value={query}
       onChange={(e) => setQuery(e.target.value)}
     />
