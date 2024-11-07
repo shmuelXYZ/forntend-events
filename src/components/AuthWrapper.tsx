@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "./NavBar";
-import LoginForm from "./LoginForm";
-import RegisterForm from "./RegisterForm";
+import LoginForm from "../pages/LoginForm";
+import RegisterForm from "../pages/RegisterForm";
 import { User } from "../types/userTypes";
 import api from "../api/api";
 

@@ -15,7 +15,7 @@ const NavBar: React.FC<NavBarProps> = ({
   onToggleRegisterForm,
 }) => {
   return (
-    <nav className="grid grid-cols-3 bg-slate-950 rounded-md my-1.5 mx-1">
+    <nav className="flex justify-between bg-slate-950 rounded-md my-1.5 mx-1">
       <Logo />
       <Search />
       <div className="justify-self-center items-center my-auto  text-purple-500">

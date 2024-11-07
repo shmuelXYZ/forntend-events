@@ -1,19 +1,27 @@
 import React from "react";
 import { EventCardProps } from "../types/eventTypes";
+import { useNavigate } from "react-router-dom";
 
 const EventCard: React.FC<EventCardProps> = ({ event }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/event/${event.id}`, { state: { event } });
+  };
+
   return (
-    <a href="#" className="group">
-      <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
+    <a href="#" className="group shadow-2xl rounded-lg">
+      <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg  bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
         <img
           src={event.imageUrl}
           alt="Tall slender porcelain bottle with natural clay textured body and cork stopper."
+          onClick={handleClick}
           className="h-full w-full object-cover object-center group-hover:opacity-75"
         />
       </div>
-      <h3 className="mt-4 text-sm text-gray-700">{event.name}</h3>
-      <p>{event.venueName}</p>
-      <p className="inline mt-1 text-lg font-medium text-gray-900">
+      <h3 className="mt-4 ml-2 text-sm text-gray-700">{event.name}</h3>
+      <p className="mt-4 ml-2 text-sm text-gray-700">{event.venueName}</p>
+      <p className="inline mt-1 ml-2 text-lg font-medium text-gray-900">
         {event.price}
       </p>
       <span>
@@ -23,7 +31,7 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="file: mt-4 h-6 w-6"
+          className="file:mb-1 h-6 w-6 ml-2"
         >
           <path
             stroke-linecap="round"
