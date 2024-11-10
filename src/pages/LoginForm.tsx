@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import api from "../api/api";
+import { useAuth } from "../context/AuthContext";
 
 // move to types
 interface LoginFormProps {
@@ -8,6 +9,7 @@ interface LoginFormProps {
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ setUser, onClose }) => {
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -16,7 +18,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ setUser, onClose }) => {
     e.preventDefault();
     console.log("Login submitted:", { email, password });
     try {
-      const response = await api.post("/login", { email, password });
+      const response = await login({ email, password });
       console.log(response);
       setUser(response.data);
       onClose();

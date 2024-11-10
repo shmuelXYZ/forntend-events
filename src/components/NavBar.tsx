@@ -1,49 +1,57 @@
-import React from "react";
-import Logo from "./Logo";
+import React, { useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import { Logo } from "./Logo";
 import Search from "./Search";
+import { UserMenu } from "./UserMenu";
+import { AuthButtons } from "./AuthButtons";
+import LoginForm from "../pages/LoginForm";
+import RegisterForm from "../pages/RegisterForm";
 
-// move to types folder
-interface NavBarProps {
-  user: { name: string } | null;
-  onToggleLoginForm: () => void;
-  onToggleRegisterForm: () => void;
-}
+export const Navbar = () => {
+  const { isAuthenticated } = useAuth();
+  const [showLoginForm, setShowLoginForm] = useState(false);
+  const [showRegisterForm, setShowRegisterForm] = useState(false);
 
-const NavBar: React.FC<NavBarProps> = ({
-  user,
-  onToggleLoginForm,
-  onToggleRegisterForm,
-}) => {
+  const toggleLoginForm = () => {
+    setShowLoginForm((prevState) => {
+      console.log(prevState);
+      if (!prevState) setShowRegisterForm(false);
+      return !prevState;
+    });
+  };
+
+  const toggleRegisterForm = () => {
+    setShowRegisterForm((prevState) => {
+      if (!prevState) setShowLoginForm(false);
+      return !prevState;
+    });
+  };
+
   return (
-    <nav className="flex justify-between bg-slate-950 rounded-md my-1.5 mx-1">
-      <Logo />
-      <Search />
-      <div className="justify-self-center items-center my-auto  text-purple-500">
-        {user ? (
-          <span>welcome {user.name}</span>
-        ) : (
-          <>
-            <button
-              // change the css like the rgister button
-              onClick={onToggleLoginForm}
-              className="relative inline-flex items-center justify-center p-0.5 mb-1 me-1 mr-6 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800"
-            >
-              <span className="relative px-1 py-1 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                Login
-              </span>
-            </button>
-            <button
-              onClick={onToggleRegisterForm}
-              className="relative inline-flex items-center justify-center p-0.5 mb-1 me-1 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800"
-            >
-              <span className="relative px-1 py-1 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                Rgister
-              </span>
-            </button>
-          </>
-        )}
+    <nav className="bg-slate-950 px-6 py-4 shadow-lg">
+      <div className="flex items-center justify-between max-w-7xl mx-auto">
+        <Logo />
+        <Search />
+
+        <div className="flex items-center space-x-8">
+          {isAuthenticated ? (
+            <UserMenu />
+          ) : (
+            <AuthButtons
+              onToggleLoginForm={() => toggleLoginForm()}
+              onToggleRegisterForm={() => toggleRegisterForm()}
+            />
+          )}
+        </div>
       </div>
+
+      {showLoginForm && <LoginForm onClose={() => setShowLoginForm(false)} />}
+
+      {showRegisterForm && (
+        <RegisterForm onClose={() => setShowRegisterForm(false)} />
+      )}
     </nav>
   );
 };
-export default NavBar;
+
+export default Navbar;

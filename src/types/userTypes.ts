@@ -3,6 +3,7 @@ export interface User {
   lastName: string;
   email: string;
   id: string;
+  role: string;
   // in the futrue the will need to have an id: string;
 }
 
