@@ -26,11 +26,11 @@ interface AuthContextType {
 }
 
 // Mock user data
-const MOCK_USER: User = {
-  id: "1",
-  email: "test@example.com",
-  firstName: "Test User",
-};
+// const MOCK_USER: User = {
+//   id: "1",
+//   email: "test@example.com",
+//   firstName: "Test User",
+// };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -42,27 +42,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    // Simulate API call delay
-    const mockVerifyUser = async () => {
-      try {
-        // Simulate network delay
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+  // useEffect(() => {
+  //   // Simulate API call delay
+  //   const mockVerifyUser = async () => {
+  //     try {
+  //       // Simulate network delay
+  //       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-        // Simulate successful authentication
-        setUser(MOCK_USER);
-        setIsAuthenticated(true);
-      } catch (err) {
-        setError("Authentication failed");
-        setUser(null);
-        setIsAuthenticated(false);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  //       // Simulate successful authentication
+  //       setUser(MOCK_USER);
+  //       setIsAuthenticated(true);
+  //     } catch (err) {
+  //       setError("Authentication failed");
+  //       setUser(null);
+  //       setIsAuthenticated(false);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
 
-    mockVerifyUser();
-  }, []);
+  //   mockVerifyUser();
+  // }, []);
 
   useEffect(() => {
     const verifyUser = async () => {
@@ -85,9 +85,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       setError(null);
       setIsLoading(true);
 
-      const { data } = await api.post<{ user: User }>("/login", credentials);
+      const {
+        data: { user },
+      } = await api.post<{ user: User }>("/login", credentials);
 
-      setUser(data.user);
+      console.log(user);
+      setUser(user);
       setIsAuthenticated(true);
     } catch (err) {
       if (axios.isAxiosError(err)) {

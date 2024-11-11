@@ -14,7 +14,6 @@ export const Navbar = () => {
 
   const toggleLoginForm = () => {
     setShowLoginForm((prevState) => {
-      console.log(prevState);
       if (!prevState) setShowRegisterForm(false);
       return !prevState;
     });

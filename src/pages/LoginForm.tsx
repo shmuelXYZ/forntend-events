@@ -4,11 +4,11 @@ import { useAuth } from "../context/AuthContext";
 
 // move to types
 interface LoginFormProps {
-  setUser: (user: { name: string; id: string }) => void;
+  // setUser: (user: { name: string; id: string }) => void;
   onClose: () => void;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ setUser, onClose }) => {
+const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
   const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,9 +18,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ setUser, onClose }) => {
     e.preventDefault();
     console.log("Login submitted:", { email, password });
     try {
-      const response = await login({ email, password });
-      console.log(response);
-      setUser(response.data);
+      await login({ email, password });
       onClose();
     } catch (err) {
       setError("plese try again, somthing went wrong");

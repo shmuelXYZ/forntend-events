@@ -15,7 +15,8 @@ const EventList = () => {
   //   } catch (error) {
   //     console.error("Error fetching events:", error);
   //   }
-  // };
+  // fetchEvents()
+  // ,[]};
   //
 
   useEffect(() => {
@@ -28,8 +29,8 @@ const EventList = () => {
         }
         const jsonRes = await res.json();
         console.log(jsonRes.Sports.length);
-        const allEvents = Object.values(jsonRes).flat();
-        const filteredEvents = allEvents.filter(
+        const allEvents: Event[] = Object.values(jsonRes).flat();
+        const filteredEvents: Event[] = allEvents.filter(
           (event) =>
             event.category
               .toLowerCase()

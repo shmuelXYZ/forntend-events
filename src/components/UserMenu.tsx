@@ -5,6 +5,7 @@ import { useAuth } from "../context/AuthContext";
 export const UserMenu = () => {
   const { user, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  console.log(`userMenu: ${user?.firstName}`);
 
   return (
     <div className="relative">
@@ -13,7 +14,7 @@ export const UserMenu = () => {
         className="flex items-center space-x-2 text-white hover:text-purple-400 focus:outline-none"
       >
         <User className="h-5 w-5" />
-        <span className="font-medium">{user?.firstName}</span>
+        <span className="font-medium">{`Welcome ${user?.firstName}`}</span>
         <ChevronDown
           className={`h-4 w-4 transition-transform ${
             isMenuOpen ? "rotate-180" : ""

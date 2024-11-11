@@ -10,17 +10,25 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onClose }) => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("user");
   const [error, setError] = useState("");
 
   const handleRegisterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Rgister submitted:", { firstName, lastName, email, password });
+    console.log("Rgister submitted:", {
+      firstName,
+      lastName,
+      email,
+      password,
+      role,
+    });
     try {
       const response = await api.post("/register/users", {
         email,
         password,
         firstName,
         lastName,
+        role,
       });
       console.log(response);
       onClose();
@@ -73,6 +81,18 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onClose }) => {
             className="border border-gray-300 p-2 rounded w-full"
             required
           />
+        </label>
+        <label className="font-semibold text-gray-700">
+          Role:
+          <select
+            className="border border-gray-300 p-2 rounded w-full"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            required
+          >
+            <option value="user">user</option>
+            <option value="Producer">producer</option>
+          </select>
         </label>
         {error && <p className="text-red-600 mt-1 font-bold">{error}</p>}
         <button
