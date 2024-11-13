@@ -4,10 +4,9 @@ import { useNavigate } from "react-router-dom";
 // move to types
 interface CategoryCardProps {
   name: string;
-  background: string;
 }
 
-const CategoryCard: React.FC<CategoryCardProps> = ({ name, background }) => {
+const CategoryCard: React.FC<CategoryCardProps> = ({ name }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
