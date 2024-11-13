@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import api from "../api/api";
+import { useAuth } from "../context/AuthContext";
 
 interface RegisterFormProps {
   onClose: () => void;
 }
 
 const RegisterForm: React.FC<RegisterFormProps> = ({ onClose }) => {
+  const { register } = useAuth();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -23,14 +25,13 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onClose }) => {
       role,
     });
     try {
-      const response = await api.post("/register/users", {
+      await register({
         email,
         password,
         firstName,
         lastName,
         role,
       });
-      console.log(response);
       onClose();
     } catch (err) {
       setError("plese try again, somthing went wrong");

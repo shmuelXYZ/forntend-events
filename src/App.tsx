@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import { Layout } from "./layouts/layout";
 import { AuthProvider } from "./context/AuthContext";
 import CategoryList from "./pages/CategoriesListPage";
@@ -15,6 +20,7 @@ function App() {
             <Route path="/" element={<CategoryList />} />
             <Route path="/events/:category" element={<EventList />} />
             <Route path="/event/:id" element={<EventPage />} />
+            {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
           </Route>
         </Routes>
       </Router>

@@ -16,6 +16,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
 
   const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
     console.log("Login submitted:", { email, password });
     try {
       await login({ email, password });

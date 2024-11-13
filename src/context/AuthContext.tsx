@@ -2,6 +2,7 @@ import React, { useEffect, createContext, useState, useContext } from "react";
 import api from "../api/api";
 import { User } from "../types/userTypes";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 interface LoginCredentials {
   email: string;
@@ -25,13 +26,6 @@ interface AuthContextType {
   clearError: () => void;
 }
 
-// Mock user data
-// const MOCK_USER: User = {
-//   id: "1",
-//   email: "test@example.com",
-//   firstName: "Test User",
-// };
-
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -43,54 +37,69 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [error, setError] = useState<string | null>(null);
 
   // useEffect(() => {
-  //   // Simulate API call delay
-  //   const mockVerifyUser = async () => {
+  //   const verifyUser = async () => {
   //     try {
-  //       // Simulate network delay
-  //       await new Promise((resolve) => setTimeout(resolve, 1000));
-
-  //       // Simulate successful authentication
-  //       setUser(MOCK_USER);
+  //       const { data } = await api.get<{ user: User }>("/auth");
+  //       console.log(data);
+  //       setUser(data.user);
   //       setIsAuthenticated(true);
   //     } catch (err) {
-  //       setError("Authentication failed");
   //       setUser(null);
   //       setIsAuthenticated(false);
+  //       console.log("error verify:", err);
   //     } finally {
   //       setIsLoading(false);
   //     }
   //   };
-
-  //   mockVerifyUser();
+  //   verifyUser();
   // }, []);
 
+  // v.2 useEffect
   useEffect(() => {
+    let isMounted = true;
+
     const verifyUser = async () => {
       try {
-        const { data } = await api.get<{ user: User }>("/auth");
-        setUser(data.user);
-        setIsAuthenticated(true);
+        const response = await api.get("/auth");
+        if (isMounted && response.data && response.data.user) {
+          setUser(response.data.user);
+          setIsAuthenticated(true);
+        }
       } catch (err) {
-        setUser(null);
-        setIsAuthenticated(false);
+        if (isMounted) {
+          // Only update state if we're currently authenticated
+          // This prevents unnecessary re-renders
+          if (isAuthenticated) {
+            setUser(null);
+            setIsAuthenticated(false);
+          }
+        }
       } finally {
-        setIsLoading(false);
+        if (isMounted) {
+          setIsLoading(false);
+        }
       }
     };
-    verifyUser();
-  }, []);
+
+    // Only run verification if we're not already know we're unauthenticated
+    if (isLoading) {
+      verifyUser();
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, []); // Empty dependency array
 
   const login = async (credentials: LoginCredentials) => {
     try {
       setError(null);
       setIsLoading(true);
 
-      const {
-        data: { user },
-      } = await api.post<{ user: User }>("/login", credentials);
+      const response = await api.post<{ data: User }>("/login", credentials);
 
       console.log(user);
-      setUser(user);
+      setUser(response.data.data);
       setIsAuthenticated(true);
     } catch (err) {
       if (axios.isAxiosError(err)) {
@@ -111,12 +120,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       setError(null);
       setIsLoading(true);
 
-      const { data } = await api.post<{ user: User }>(
+      const response = await api.post<{ data: User }>(
         "/register/users",
         credentials
       );
 
-      setUser(data.user);
+      setUser(response.data.data);
+      console.log("user:", user);
       setIsAuthenticated(true);
     } catch (err) {
       if (axios.isAxiosError(err)) {
@@ -137,7 +147,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       setError(null);
       setIsLoading(true);
 
-      await api.post("/logout");
+      await api.get("/logout");
 
       setUser(null);
       setIsAuthenticated(false);
