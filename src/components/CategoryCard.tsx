@@ -10,7 +10,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ name }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/events/${name}`);
+    navigate(`/events?category=${name}`);
   };
 
   return (

@@ -18,7 +18,7 @@ function App() {
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<CategoryList />} />
-            <Route path="/events/:category" element={<EventList />} />
+            <Route path="/events" element={<EventList />} />
             <Route path="/event/:id" element={<EventPage />} />
             {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
           </Route>
