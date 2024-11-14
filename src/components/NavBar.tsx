@@ -27,7 +27,7 @@ export const Navbar = () => {
   };
 
   return (
-    <nav className="bg-slate-950 px-6 py-4 shadow-lg">
+    <nav className="bg-slate-950 px-6 py-4 shadow-lg h-[72px]">
       <div className="flex items-center justify-between max-w-7xl mx-auto">
         <Logo />
         <Search />
