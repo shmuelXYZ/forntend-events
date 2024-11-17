@@ -8,7 +8,7 @@ interface LoginFormProps {
   onClose: () => void;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
+const LoginPage: React.FC<LoginFormProps> = ({ onClose }) => {
   const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,6 +20,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
     console.log("Login submitted:", { email, password });
     try {
       await login({ email, password });
+
       onClose();
     } catch (err) {
       setError("plese try again, somthing went wrong");
@@ -64,4 +65,4 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
   );
 };
 
-export default LoginForm;
+export default LoginPage;

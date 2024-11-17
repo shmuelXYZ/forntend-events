@@ -6,9 +6,11 @@ import {
   Navigate,
 } from "react-router-dom";
 import { Layout } from "./layouts/layout";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 import { AuthProvider } from "./context/AuthContext";
 import CategoryList from "./pages/CategoriesListPage";
-import EventList from "./pages/EventsListPage";
+import EventsListPage from "./pages/EventsListPage";
 import { EventPage } from "./pages/EventPage";
 
 function App() {
@@ -17,8 +19,10 @@ function App() {
       <Router>
         <Routes>
           <Route element={<Layout />}>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
             <Route path="/" element={<CategoryList />} />
-            <Route path="/events" element={<EventList />} />
+            <Route path="/events" element={<EventsListPage />} />
             <Route path="/event/:id" element={<EventPage />} />
             {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
           </Route>

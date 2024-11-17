@@ -4,7 +4,7 @@ import EventCard from "../components/EventCard";
 import { Event } from "../types/eventTypes";
 import api from "../api/api";
 
-const EventList = () => {
+const EventsListPage = () => {
   const [searchParams] = useSearchParams();
   const category = searchParams.get("category");
   const [events, setEvents] = useState<Event[]>([]);
@@ -76,4 +76,4 @@ const EventList = () => {
   );
 };
 
-export default EventList;
+export default EventsListPage;

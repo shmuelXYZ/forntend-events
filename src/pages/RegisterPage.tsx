@@ -6,7 +6,7 @@ interface RegisterFormProps {
   onClose: () => void;
 }
 
-const RegisterForm: React.FC<RegisterFormProps> = ({ onClose }) => {
+const RegisterPage: React.FC<RegisterFormProps> = ({ onClose }) => {
   const { register } = useAuth();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -107,4 +107,4 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onClose }) => {
   );
 };
 
-export default RegisterForm;
+export default RegisterPage;

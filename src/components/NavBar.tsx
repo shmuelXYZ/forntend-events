@@ -4,8 +4,8 @@ import { Logo } from "./Logo";
 import Search from "./Search";
 import { UserMenu } from "./UserMenu";
 import { AuthButtons } from "./AuthButtons";
-import LoginForm from "../pages/LoginForm";
-import RegisterForm from "../pages/RegisterForm";
+import LoginForm from "../pages/LoginPage";
+import RegisterForm from "../pages/RegisterPage";
 
 export const Navbar = () => {
   const { isAuthenticated } = useAuth();
