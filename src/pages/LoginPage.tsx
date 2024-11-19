@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import api from "../api/api";
 import { useAuth } from "../context/AuthContext";
 
 // move to types
 interface LoginFormProps {
-  // setUser: (user: { name: string; id: string }) => void;
   onClose: () => void;
 }
 
@@ -20,7 +18,6 @@ const LoginPage: React.FC<LoginFormProps> = ({ onClose }) => {
     console.log("Login submitted:", { email, password });
     try {
       await login({ email, password });
-
       onClose();
     } catch (err) {
       setError("plese try again, somthing went wrong");

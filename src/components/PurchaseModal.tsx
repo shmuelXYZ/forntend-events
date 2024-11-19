@@ -4,27 +4,29 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { useAuth } from "../context/AuthContext"; // auth context
 import api from "../api/api";
+import { Event } from "../types/eventTypes";
+import extractMoney from "../utils/PriceUtiles";
 
 interface PurchaseModalProps {
   isOpen: boolean;
   onClose: () => void;
-  eventId: string;
-  eventName: string;
-  price: number;
+  event: Event;
 }
 
 const PurchaseModal: React.FC<PurchaseModalProps> = ({
   isOpen,
   onClose,
-  eventId,
-  eventName,
-  price,
+  event,
 }) => {
   const [ticketCount, setTicketCount] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
-  const totalPrice = +price * ticketCount;
+  const priceNumber = extractMoney(event.price); //from "utils/PriceUtiles"
+  const amount = priceNumber?.amount ?? 0;
+  const currency = priceNumber?.currency ?? 0;
+
+  const totalPrice = amount * ticketCount;
 
   useEffect(() => {
     if (isOpen && !isAuthenticated) {
@@ -37,21 +39,24 @@ const PurchaseModal: React.FC<PurchaseModalProps> = ({
   }, [isOpen, isAuthenticated]);
 
   const handlePurchase = async () => {
-    if (!user || !eventId) return;
+    if (!user || !event.id) return;
 
     setIsLoading(true);
     try {
       const response = await api.post(
-        `event-purchas/${eventId}/${user.id}/${ticketCount}`
+        `event-purchas/${event.id}/${user.id}/${ticketCount}`
       );
 
-      toast.success("Purchase successful!", {
-        duration: 5000,
-        position: "top-center",
-        style: {
-          zIndex: 100000, // Ensure it's above modal
-        },
-      });
+      toast.success(
+        `Purchase successful! ${user.firstName},you have ${ticketCount} to the ${event.name}`,
+        {
+          duration: 10000,
+          position: "top-center",
+          style: {
+            zIndex: 100000, // Ensure it's above modal
+          },
+        }
+      );
 
       if (response.status === 201) {
         console.log(response.status);
@@ -90,7 +95,7 @@ const PurchaseModal: React.FC<PurchaseModalProps> = ({
           >
             {/* Header */}
             <div className="p-6 bg-gradient-to-r from-purple-500 to-pink-500">
-              <h2 className="text-2xl font-bold text-white">{eventName}</h2>
+              <h2 className="text-2xl font-bold text-white">{event.name}</h2>
             </div>
 
             {/* Content */}
@@ -125,7 +130,7 @@ const PurchaseModal: React.FC<PurchaseModalProps> = ({
               <div className="bg-gray-50 p-4 rounded-lg space-y-2">
                 <div className="flex justify-between">
                   <span>Price per ticket:</span>
-                  <span>${price}</span>
+                  <span>${event.price}</span>
                 </div>
                 <div className="flex justify-between font-bold text-lg">
                   <span>Total:</span>

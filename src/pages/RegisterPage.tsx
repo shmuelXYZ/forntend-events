@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import api from "../api/api";
 import { useAuth } from "../context/AuthContext";
 
 interface RegisterFormProps {
