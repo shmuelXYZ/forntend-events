@@ -6,6 +6,7 @@ import { useAuth } from "../context/AuthContext"; // auth context
 import api from "../api/api";
 import { Event } from "../types/eventTypes";
 import extractMoney from "../utils/PriceUtiles";
+import { useLoginModal } from "../context/LoginModalContext";
 
 interface PurchaseModalProps {
   isOpen: boolean;
@@ -21,7 +22,8 @@ const PurchaseModal: React.FC<PurchaseModalProps> = ({
   const [ticketCount, setTicketCount] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const { user, isAuthenticated } = useAuth();
-  const navigate = useNavigate();
+  const { setShowLoginModal } = useLoginModal();
+
   const priceNumber = extractMoney(event.price); //from "utils/PriceUtiles"
   const amount = priceNumber?.amount ?? 0;
   const currency = priceNumber?.currency ?? 0;
@@ -30,10 +32,11 @@ const PurchaseModal: React.FC<PurchaseModalProps> = ({
 
   useEffect(() => {
     if (isOpen && !isAuthenticated) {
-      toast.error("Please login to purchase tickets");
-      navigate("/login", {
-        state: { returnPath: window.location.pathname },
+      toast.error("Please login to purchase tickets", {
+        position: "bottom-right",
       });
+      console.log("iii");
+      setShowLoginModal(true);
       onClose();
     }
   }, [isOpen, isAuthenticated]);

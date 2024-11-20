@@ -49,7 +49,7 @@ const EventsListPage = () => {
       const { scrollTop, scrollHeight, clientHeight } = container;
       if (scrollHeight - scrollTop - clientHeight < 100) {
         if (hasMore) {
-          console.log("loading ...");
+          console.log("loading ...", hasMore);
           setPage((prevPage) => prevPage + 1);
         }
       }
@@ -61,7 +61,7 @@ const EventsListPage = () => {
   return (
     <div
       ref={containerRef}
-      style={{ height: "calc(100vh - 72px)" }}
+      style={{ height: "calc(100vh - 160px)" }}
       className="bg-slate-600 overflow-y-auto"
     >
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">

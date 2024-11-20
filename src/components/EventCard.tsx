@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import PurchaseModal from "./PurchaseModal";
 import { EventCardProps } from "../types/eventTypes";
 import { useNavigate } from "react-router-dom";
-import { LucideShoppingCart } from "lucide-react";
 import { PurchaseButton } from "./PurchaseButton";
 
 const EventCard: React.FC<EventCardProps> = ({ event }) => {

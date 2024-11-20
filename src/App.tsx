@@ -12,22 +12,26 @@ import { AuthProvider } from "./context/AuthContext";
 import CategoryList from "./pages/CategoriesListPage";
 import EventsListPage from "./pages/EventsListPage";
 import { EventPage } from "./pages/EventPage";
+import { AdminPage } from "./pages/AdminPage";
+import { LoginModalProvider } from "./context/LoginModalContext";
 
 function App() {
   return (
     <AuthProvider>
-      <Router>
-        <Routes>
-          <Route element={<Layout />}>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/" element={<CategoryList />} />
-            <Route path="/events" element={<EventsListPage />} />
-            <Route path="/event/:id" element={<EventPage />} />
-            {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
-          </Route>
-        </Routes>
-      </Router>
+      <LoginModalProvider>
+        <Router>
+          <Routes>
+            <Route element={<Layout />}>
+              {/* <Route path="/register" element={<RegisterPage />} /> */}
+              <Route path="/" element={<CategoryList />} />
+              <Route path="/events" element={<EventsListPage />} />
+              <Route path="/event/:id" element={<EventPage />} />
+              <Route path="/admin" element={<AdminPage />} />
+              {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
+            </Route>
+          </Routes>
+        </Router>
+      </LoginModalProvider>
     </AuthProvider>
   );
 }

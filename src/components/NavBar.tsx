@@ -1,30 +1,16 @@
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { useLoginModal } from "../context/LoginModalContext";
 import { Logo } from "./Logo";
 import Search from "./Search";
 import { UserMenu } from "./UserMenu";
 import { AuthButtons } from "./AuthButtons";
-import LoginForm from "../pages/LoginPage";
-import RegisterForm from "../pages/RegisterPage";
+import { LoginModal } from "../pages/LoginModal";
+import { RegisterModal } from "../pages/RgisterModal";
 
 export const Navbar = () => {
   const { isAuthenticated } = useAuth();
-  const [showLoginForm, setShowLoginForm] = useState(false);
-  const [showRegisterForm, setShowRegisterForm] = useState(false);
-
-  const toggleLoginForm = () => {
-    setShowLoginForm((prevState) => {
-      if (!prevState) setShowRegisterForm(false);
-      return !prevState;
-    });
-  };
-
-  const toggleRegisterForm = () => {
-    setShowRegisterForm((prevState) => {
-      if (!prevState) setShowLoginForm(false);
-      return !prevState;
-    });
-  };
+  const { showLoginModal, showRgisterModal } = useLoginModal();
 
   return (
     <nav className="bg-slate-950 px-6 py-4 shadow-lg h-[72px]">
@@ -33,22 +19,13 @@ export const Navbar = () => {
         <Search />
 
         <div className="flex items-center space-x-8">
-          {isAuthenticated ? (
-            <UserMenu />
-          ) : (
-            <AuthButtons
-              onToggleLoginForm={() => toggleLoginForm()}
-              onToggleRegisterForm={() => toggleRegisterForm()}
-            />
-          )}
+          {isAuthenticated ? <UserMenu /> : <AuthButtons />}
         </div>
       </div>
 
-      {showLoginForm && <LoginForm onClose={() => setShowLoginForm(false)} />}
+      {showLoginModal && <LoginModal />}
 
-      {showRegisterForm && (
-        <RegisterForm onClose={() => setShowRegisterForm(false)} />
-      )}
+      {showRgisterModal && <RegisterModal />}
     </nav>
   );
 };

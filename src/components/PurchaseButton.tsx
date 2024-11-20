@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Event } from "../types/eventTypes";
 import PurchaseModal from "./PurchaseModal";
-import { useAuth } from "../context/AuthContext";
 import { LucideShoppingCart } from "lucide-react";
 
 interface PurchaseButtonProps {
@@ -14,7 +13,6 @@ export const PurchaseButton: React.FC<PurchaseButtonProps> = ({
   variant,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  //   const { user } = useAuth;
 
   const buttonStyles = {
     card: "relative inline-flex items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 p-0.5 font-medium text-gray-900 hover:text-white focus:outline-none focus:ring-2 focus:ring-purple-200 dark:text-white dark:focus:ring-purple-800",
