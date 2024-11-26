@@ -10,6 +10,7 @@ const EventsListPage = () => {
   const [events, setEvents] = useState<Event[]>([]);
   const [page, setPage] = useState(0);
   const [hasMore, setHasmore] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Reset pagination when category changes
@@ -22,6 +23,9 @@ const EventsListPage = () => {
   // triger when the user 100px from the buttom of page.
   useEffect(() => {
     const fetchData = async () => {
+      if (isLoading) return;
+
+      setIsLoading(true);
       try {
         const response = await api.get(
           `/events?category=${category}&page=${page}`
@@ -33,9 +37,12 @@ const EventsListPage = () => {
         } else {
           setEvents((prevEvents) => [...prevEvents, ...newEvents]);
         }
+
         setHasmore(newEvents.length === 8);
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchData();
@@ -45,18 +52,27 @@ const EventsListPage = () => {
     const container = containerRef.current;
     if (!container) return;
 
+    let timeoutId: number | undefined;
+
     const handleScroll = () => {
-      const { scrollTop, scrollHeight, clientHeight } = container;
-      if (scrollHeight - scrollTop - clientHeight < 100) {
-        if (hasMore) {
-          console.log("loading ...", hasMore);
-          setPage((prevPage) => prevPage + 1);
+      if (isLoading || !hasMore) return;
+
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        const { scrollTop, scrollHeight, clientHeight } = container;
+
+        if (scrollHeight - scrollTop - clientHeight < 100) {
+          setPage((prev) => prev + 1);
         }
-      }
+      }, 500);
     };
+
     container.addEventListener("scroll", handleScroll);
-    return () => container.removeEventListener("scroll", handleScroll);
-  }, [hasMore]);
+    return () => {
+      container.removeEventListener("scroll", handleScroll);
+      clearTimeout(timeoutId);
+    };
+  }, [isLoading, hasMore]);
 
   return (
     <div

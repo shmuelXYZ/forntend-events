@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useAuth } from "../context/AuthContext";
 import { useLoginModal } from "../context/LoginModalContext";
 import { Logo } from "./Logo";
@@ -22,9 +22,7 @@ export const Navbar = () => {
           {isAuthenticated ? <UserMenu /> : <AuthButtons />}
         </div>
       </div>
-
       {showLoginModal && <LoginModal />}
-
       {showRgisterModal && <RegisterModal />}
     </nav>
   );

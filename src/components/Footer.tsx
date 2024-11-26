@@ -8,9 +8,9 @@ export const Footer = () => {
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6">
         <div className="flex justify-between items-center">
           <div className="flex items-center">
-            <img src="/your-logo.svg" className="h-8 me-3" alt="Logo" />
+            <img src="src/assets/logo.webp" className="h-8 me-3" alt="Logo" />
             <span className="text-2xl font-semibold dark:text-white">
-              Your Brand
+              Tickets
             </span>
           </div>
 

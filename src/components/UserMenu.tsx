@@ -10,7 +10,7 @@ export const UserMenu = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="relative">
+    <div className="relative z-50">
       <button
         onClick={() => setIsMenuOpen(!isMenuOpen)}
         className="flex items-center space-x-2 text-white hover:text-purple-400 focus:outline-none"

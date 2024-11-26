@@ -23,12 +23,12 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
         </div>
         <h3 className="mt-4 ml-2 text-sm text-slate-300">{event.name}</h3>
         <p className="mt-4 ml-2 text-sm text-slate-300">{event.venueName}</p>
+        <p className="mt-4 ml-2 text-sm text-slate-300">Date: {event.date}</p>
         <p className="inline mt-1 ml-2 text-lg font-medium text-purple-400">
           {event.price}
         </p>
-        <p>
-          <PurchaseButton event={event} variant="card" />
-        </p>
+
+        <PurchaseButton event={event} variant="card" />
       </a>
     </>
   );
