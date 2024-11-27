@@ -1,13 +1,12 @@
 import React from "react";
-import { useLocation, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
-import api from "../api/api";
+import { useLocation } from "react-router-dom";
+import { useState } from "react";
+import { PurchaseButton } from "../components/PurchaseButton";
 
 // import React from 'react'
 
 export const EventPage = () => {
   const { state } = useLocation();
-  //   const { id } = useParams();
 
   const [event, setEvent] = useState(state?.event);
 
@@ -65,6 +64,7 @@ export const EventPage = () => {
                 <strong>Location:</strong> {event.location}
               </p>
             </div>
+            <PurchaseButton event={event} variant="page" />
           </div>
 
           {/* Google Maps Integration */}

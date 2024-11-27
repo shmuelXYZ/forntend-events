@@ -1,18 +1,17 @@
 import React from "react";
+import { useLoginModal } from "../context/LoginModalContext";
 
-interface AuthButtonsProps {
-  onToggleLoginForm: () => void;
-  onToggleRegisterForm: () => void;
-}
+// interface AuthButtonsProps {
+//   onToggleLoginForm: () => void;
+//   onToggleRegisterForm: () => void;
+// }
 
-export const AuthButtons: React.FC<AuthButtonsProps> = ({
-  onToggleLoginForm,
-  onToggleRegisterForm,
-}) => {
+export const AuthButtons: React.FC = ({}) => {
+  const { setShowLoginModal, setShowRegisterModal } = useLoginModal();
   return (
     <div className="flex space-x-4">
       <button
-        onClick={onToggleLoginForm}
+        onClick={() => setShowLoginModal(true)}
         className="relative inline-flex items-center justify-center overflow-hidden 
                      rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 p-0.5 
                      font-medium text-gray-900 hover:text-white focus:outline-none 
@@ -28,7 +27,7 @@ export const AuthButtons: React.FC<AuthButtonsProps> = ({
       </button>
 
       <button
-        onClick={onToggleRegisterForm}
+        onClick={() => setShowRegisterModal(true)}
         className="relative inline-flex items-center justify-center overflow-hidden 
                      rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 p-0.5 
                      font-medium text-gray-900 hover:text-white focus:outline-none 
