@@ -9,11 +9,11 @@ interface LoginModalContextType {
   switchToRegister: () => void;
 }
 
-const LoginModalContext = createContext<LoginModalContextType | undefined>(
+const ModalContext = createContext<LoginModalContextType | undefined>(
   undefined
 );
 
-export const LoginModalProvider: React.FC<{ children: React.ReactNode }> = ({
+export const ModalContextProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -30,7 +30,7 @@ export const LoginModalProvider: React.FC<{ children: React.ReactNode }> = ({
   // Both modals for login and register are managed through one context, and option to
   // switch between them, and accessable in the entire app.
   return (
-    <LoginModalContext.Provider
+    <ModalContext.Provider
       value={{
         showLoginModal,
         setShowLoginModal,
@@ -41,11 +41,11 @@ export const LoginModalProvider: React.FC<{ children: React.ReactNode }> = ({
       }}
     >
       {children}
-    </LoginModalContext.Provider>
+    </ModalContext.Provider>
   );
 };
 export const useLoginModal = () => {
-  const context = useContext(LoginModalContext);
+  const context = useContext(ModalContext);
   if (!context) {
     throw new Error("useLoginModal must be used within a LoginModalProvider");
   }

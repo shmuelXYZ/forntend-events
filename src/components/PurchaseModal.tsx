@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import { toast } from "react-hot-toast";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/AuthProvider";
 import api from "../api/api";
 import { Event } from "../types/eventTypes";
 import extractMoney from "../utils/PriceUtiles";
-import { useLoginModal } from "../context/LoginModalContext";
+import { useLoginModal } from "../context/ModalProvider";
 
 interface PurchaseModalProps {
   isOpen: boolean;
@@ -32,9 +32,7 @@ const PurchaseModal: React.FC<PurchaseModalProps> = ({
 
   useEffect(() => {
     if (isOpen && !isAuthenticated) {
-      toast.error("Please login to purchase tickets", {
-        position: "bottom-right",
-      });
+      toast.error("Please login to purchase tickets");
       setShowLoginModal(true);
       onClose();
     }

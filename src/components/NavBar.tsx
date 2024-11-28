@@ -1,6 +1,6 @@
 import React from "react";
-import { useAuth } from "../context/AuthContext";
-import { useLoginModal } from "../context/LoginModalContext";
+import { useAuth } from "../context/AuthProvider";
+import { useLoginModal } from "../context/ModalProvider";
 import { Logo } from "./Logo";
 import Search from "./Search";
 import { UserMenu } from "./UserMenu";
