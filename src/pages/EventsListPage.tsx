@@ -64,7 +64,7 @@ const EventsListPage = () => {
         if (scrollHeight - scrollTop - clientHeight < 100) {
           setPage((prev) => prev + 1);
         }
-      }, 500);
+      }, 300);
     };
 
     container.addEventListener("scroll", handleScroll);
@@ -77,7 +77,7 @@ const EventsListPage = () => {
   return (
     <div
       ref={containerRef}
-      style={{ height: "calc(100vh - 160px)" }}
+      style={{ height: "calc(100vh - 40px)" }}
       className="bg-slate-600 overflow-y-auto"
     >
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">

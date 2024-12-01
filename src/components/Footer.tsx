@@ -3,8 +3,6 @@ import React from "react";
 export const Footer = () => {
   return (
     <footer className="bg-white dark:bg-gray-900 h-40">
-      {" "}
-      {/* Fixed height of 160px */}
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6">
         <div className="flex justify-between items-center">
           <div className="flex items-center">

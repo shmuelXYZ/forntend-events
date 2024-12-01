@@ -31,7 +31,7 @@ export const UserMenu = () => {
               navigate(user?.role === "admin" ? "/admin" : "/"),
                 setIsMenuOpen(false);
             }}
-            className="flex items-center px-4 py-2 text-sm text-gray-200 hover:bg-slate-800"
+            className="flex items-center w-full px-4 py-2 text-sm text-gray-200 hover:bg-slate-800"
           >
             <User className="h-4 w-4 mr-2" />
             {user?.role === "user" || user?.role === "producer"
