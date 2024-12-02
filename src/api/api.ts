@@ -4,7 +4,7 @@ import axios from "axios";
 const api = axios.create({
   baseURL: "http://localhost:3000/", // Set base URL for your local server
   withCredentials: true, // Enable cookies to be sent with requests
-  timeout: 5000,
+  timeout: 15000,
   headers: { "Content-Type": "application/json" },
 });
 

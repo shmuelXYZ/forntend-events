@@ -11,6 +11,8 @@ import { ModalContextProvider } from "./context/ModalProvider";
 import CategoryList from "./components/Home";
 import { Toaster } from "react-hot-toast";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { SearchEvents } from "./pages/SearchEventsPage";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   return (
@@ -32,6 +34,8 @@ function App() {
                 <Route path="/" element={<CategoryList />} />
                 <Route path="/events" element={<EventsListPage />} />
                 <Route path="/event/:id" element={<EventPage />} />
+                <Route path="/search-events" element={<SearchEvents />} />
+                <Route path="/profile" element={<ProfilePage />} />
                 <Route
                   path="/admin"
                   element={

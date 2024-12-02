@@ -28,7 +28,7 @@ export const UserMenu = () => {
         <div className="absolute right-0 mt-2 w-48 py-2 bg-slate-900 rounded-lg shadow-xl border border-slate-800">
           <button
             onClick={() => {
-              navigate(user?.role === "admin" ? "/admin" : "/"),
+              navigate(user?.role === "admin" ? "/admin" : "/profile"),
                 setIsMenuOpen(false);
             }}
             className="flex items-center w-full px-4 py-2 text-sm text-gray-200 hover:bg-slate-800"
