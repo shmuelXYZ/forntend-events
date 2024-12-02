@@ -28,7 +28,7 @@ const EditModal: React.FC<EditModalProps> = ({
   };
 
   const handleChange = (key: string, value: any) => {
-    setFormData((prev) => ({
+    setFormData((prev: any) => ({
       ...prev,
       [key]: value,
     }));
@@ -42,7 +42,18 @@ const EditModal: React.FC<EditModalProps> = ({
     if (hasChanges()) {
       setIsLoading(true);
       try {
-        await onSave(formData);
+        const changedData = Object.keys(formData).reduce((acc: any, key) => {
+          if (
+            formData[key] !== rowData[key] &&
+            !["password", "updatedAt", "createdAt"].includes(key)
+          ) {
+            acc[key] = formData[key];
+          }
+          return acc;
+        }, {});
+
+        changedData.id = rowData.id;
+        await onSave(changedData);
         onClose();
       } catch (err) {
         setError("Failed to save changes. Please try again.");

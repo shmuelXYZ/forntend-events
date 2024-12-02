@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import EditModal from "../components/EditModal";
 import FilterModal from "../components/FilterModal";
 import CreateModal from "../components/CreateModal";
+import { data } from "framer-motion/client";
 
 interface TableRow {
   id: string;
@@ -91,7 +92,10 @@ const AdminPage = () => {
     try {
       const response = await api.put(
         `admin/${selectedTable}/${dataToUpdate.id}`,
-        dataToUpdate
+        {
+          ids: [dataToUpdate.id],
+          data: dataToUpdate,
+        }
       );
 
       if (response.status === 200) {
