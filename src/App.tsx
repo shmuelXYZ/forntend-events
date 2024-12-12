@@ -1,19 +1,18 @@
 import React, { useState } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { Layout } from "./layouts/layout";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthContextProvider } from "./context/AuthProvider";
 // import CategoryList from "./pages/CategoriesListPage";
 import EventsListPage from "./pages/EventsListPage";
 import { EventPage } from "./pages/EventPage";
 import AdminPage from "./pages/AdminPage";
-import { LoginModalProvider } from "./context/LoginModalContext";
+import { ModalContextProvider } from "./context/ModalProvider";
 import CategoryList from "./components/Home";
+import { Toaster } from "react-hot-toast";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { SearchEvents } from "./pages/SearchEventsPage";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   return (
@@ -21,23 +20,35 @@ function App() {
       options={{
         clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID || "",
         currency: "USD",
+        intent: "capture",
+        components: "buttons",
+        debug: true, // This will help show any PayPal errors in console
       }}
     >
-      <AuthProvider>
-        <LoginModalProvider>
+      <AuthContextProvider>
+        <ModalContextProvider>
+          <Toaster position="top-right" />
           <Router>
             <Routes>
               <Route element={<Layout />}>
                 <Route path="/" element={<CategoryList />} />
                 <Route path="/events" element={<EventsListPage />} />
                 <Route path="/event/:id" element={<EventPage />} />
-                <Route path="/admin" element={<AdminPage />} />
-                {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
+                <Route path="/search-events" element={<SearchEvents />} />
+                <Route path="/profile" element={<ProfilePage />} />
+                <Route
+                  path="/admin"
+                  element={
+                    <ProtectedRoute>
+                      <AdminPage />
+                    </ProtectedRoute>
+                  }
+                />
               </Route>
             </Routes>
           </Router>
-        </LoginModalProvider>
-      </AuthProvider>
+        </ModalContextProvider>
+      </AuthContextProvider>
     </PayPalScriptProvider>
   );
 }

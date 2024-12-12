@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { User, LogOut, ChevronDown } from "lucide-react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
 
 export const UserMenu = () => {
@@ -28,10 +28,10 @@ export const UserMenu = () => {
         <div className="absolute right-0 mt-2 w-48 py-2 bg-slate-900 rounded-lg shadow-xl border border-slate-800">
           <button
             onClick={() => {
-              navigate(user?.role === "admin" ? "/admin" : "/"),
+              navigate(user?.role === "admin" ? "/admin" : "/profile"),
                 setIsMenuOpen(false);
             }}
-            className="flex items-center px-4 py-2 text-sm text-gray-200 hover:bg-slate-800"
+            className="flex items-center w-full px-4 py-2 text-sm text-gray-200 hover:bg-slate-800"
           >
             <User className="h-4 w-4 mr-2" />
             {user?.role === "user" || user?.role === "producer"

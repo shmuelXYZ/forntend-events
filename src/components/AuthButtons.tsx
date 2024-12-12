@@ -1,5 +1,5 @@
 import React from "react";
-import { useLoginModal } from "../context/LoginModalContext";
+import { useLoginModal } from "../context/ModalProvider";
 
 // interface AuthButtonsProps {
 //   onToggleLoginForm: () => void;

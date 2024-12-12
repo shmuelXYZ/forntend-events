@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { useLoginModal } from "../context/LoginModalContext";
+import { useLoginModal } from "../context/ModalProvider";
 import { Eye, EyeOff } from "lucide-react";
 import { motion } from "framer-motion";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/AuthProvider";
 import Input from "../components/Input";
 
 export const RegisterModal = () => {
