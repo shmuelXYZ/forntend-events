@@ -90,13 +90,10 @@ const AdminPage = () => {
   // send api call to backend with the update row along with id.
   const handleSaveEdit = async (dataToUpdate: any) => {
     try {
-      const response = await api.put(
-        `admin/${selectedTable}/${dataToUpdate.id}`,
-        {
-          ids: [dataToUpdate.id],
-          data: dataToUpdate,
-        }
-      );
+      const response = await api.put(`admin/${selectedTable}`, {
+        ids: [dataToUpdate.id],
+        data: dataToUpdate,
+      });
 
       if (response.status === 200) {
         fetchTableData(selectedTable);
