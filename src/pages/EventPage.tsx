@@ -1,33 +1,60 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { PurchaseButton } from "../components/PurchaseButton";
-
-// import React from 'react'
+import { MapComponent } from "../components/MapGoogle";
+import api from "../api/api";
 
 export const EventPage = () => {
+  const { id } = useParams();
   const { state } = useLocation();
-
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(!state?.event);
   const [event, setEvent] = useState(state?.event);
 
   // Fallback fetch in case user directly navigates to URL
-  //   useEffect(() => {
-  //     if (!event) {
-  //       // Fetch event data using id
-  //       fetchEventData(id);
-  //     }
-  //   }, [id, event]);
+  useEffect(() => {
+    const fetchEventData = async () => {
+      if (!event && id) {
+        try {
+          setIsLoading(true);
+          const response = await api.get(`/events/${id}`);
+          setEvent(response.data.data);
+        } catch (error) {
+          console.error("Error fetching event:", error);
+          setError("Failed to load event details");
+        } finally {
+          setIsLoading(false);
+        }
+      }
+    };
 
-  //   const fetchEventData = async (eventId) => {
-  //     try {
-  //       // Replace with your actual API call
-  //       const response = await api(`/events/${eventId}`);
-  //       // const data = await response.json();
-  //       setEvent(response);
-  //     } catch (error) {
-  //       console.error("Error fetching event:", error);
-  //     }
-  //   };
+    fetchEventData();
+  }, [id, event]);
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="text-red-500">{error}</div>
+      </div>
+    );
+  }
+
+  if (!event) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="text-gray-500">Event not found</div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-4xl mx-auto p-6">
@@ -71,8 +98,8 @@ export const EventPage = () => {
           <div>
             <h2 className="text-xl font-semibold mb-4">Location</h2>
             <div className="h-64 bg-gray-100 rounded-lg">
-              {/* Add your Google Maps component here */}
-              {/* Example: <GoogleMap address={event.address} /> */}
+              {/* Google Maps component */}
+              <MapComponent address={event.location} />
             </div>
           </div>
         </div>
